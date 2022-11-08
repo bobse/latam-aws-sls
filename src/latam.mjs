@@ -163,6 +163,9 @@ class TicketFinder {
       errors = response[1];
       responseData.concat(response[0]);
     }
+    if (errors.length > 0) {
+      throw new "Could not retrieve all the urls!"();
+    }
     return responseData;
   }
 
@@ -185,5 +188,5 @@ class TicketFinder {
 
 export { TicketFinder };
 
-const a = new TicketFinder("vix", "poa", "2023-01-01", 1380, 4, 5);
-const bestPrices = await a.getBestPrices();
+// const a = new TicketFinder("vix", "poa", "2023-01-01", 1380, 4, 5);
+// const bestPrices = await a.getBestPrices();

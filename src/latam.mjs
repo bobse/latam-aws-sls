@@ -134,6 +134,7 @@ class TicketFinder {
         if (res.status !== "fulfilled") {
           errors.push(res.reason.config.url);
           console.error(`Error retrieving ${res.reason.config.url}`);
+          console.error(JSON.stringify(res.reason));
         } else {
           data.push(res.value.data);
         }

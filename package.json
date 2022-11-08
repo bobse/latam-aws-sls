@@ -1,0 +1,23 @@
+{
+  "name": "latam-aws-sls",
+  "version": "1.0.0",
+  "description": "Latam serverless ticket finder",
+  "author": "Roberto Seba",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.15.13",
+    "eslint": "^8.27.0",
+    "serverless-esbuild": "^1.33.1",
+    "serverless-offline": "^11.2.3"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "axios": "^1.1.3",
+    "dotenv": "^16.0.3"
+  },
+  "scripts": {
+    "deploy": "sls deploy --stage production",
+    "offline": "sls offline",
+    "invoke": "sls invoke local --function findTickets"
+  }
+}

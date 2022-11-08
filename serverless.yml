@@ -1,0 +1,19 @@
+org: robertoseba
+app: latam-aws
+service: latam-aws-sls
+
+useDotenv: true
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+
+functions:
+  findTickets:
+    handler: src/handler.run
+    events:
+      - schedule: cron(0 6 ? * MON,WED,SAT *)
+plugins:
+  - serverless-esbuild

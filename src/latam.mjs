@@ -123,10 +123,22 @@ class TicketFinder {
 
   async getData() {
     const urls = this.generateUrls();
-    let maxTries = 4;
+    let maxTries = 2;
+    const axiosConfig = {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
+        Host: "bff.latam.com",
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        Connection: "keep-alive",
+      },
+      timeout: 10000,
+    };
+
     const getResponses = async (urls) => {
       const responses = await Promise.allSettled(
-        urls.map((url) => axios.get(url, { timeout: 10000 }))
+        urls.map((url) => axios.get(url, axiosConfig))
       );
       const errors = [];
       const data = [];
@@ -144,6 +156,7 @@ class TicketFinder {
 
     let [responseData, errors] = await getResponses(urls);
     while (errors.length > 0 && maxTries > 0) {
+      await this._sleep(1000);
       console.log(`${maxTries} attempts left >> Trying again to get urls...`);
       const response = await getResponses(errors);
       maxTries -= 1;
@@ -164,9 +177,13 @@ class TicketFinder {
     }
     return urls;
   }
+
+  _sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 }
 
 export { TicketFinder };
 
-// const a = new TicketFinder("vix", "poa", "2023-01-01", 1380, 4, 5);
-// const bestPrices = await a.getBestPrices();
+const a = new TicketFinder("vix", "poa", "2023-01-01", 1380, 4, 5);
+const bestPrices = await a.getBestPrices();

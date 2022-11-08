@@ -25,6 +25,8 @@ functions:
     handler: src/handler.run
     events:
       - schedule: cron(0 6 ? * MON,WED,SAT *)
+    timeout: 300
+
 plugins:
   - serverless-esbuild
   - serverless-offline

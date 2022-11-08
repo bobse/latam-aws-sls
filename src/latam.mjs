@@ -126,7 +126,7 @@ class TicketFinder {
     let maxTries = 4;
     const getResponses = async (urls) => {
       const responses = await Promise.allSettled(
-        urls.map((url) => axios.get(url, { timeout: 8000 }))
+        urls.map((url) => axios.get(url, { timeout: 10000 }))
       );
       const errors = [];
       const data = [];

@@ -9,6 +9,16 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs16.x
+  environment:
+    SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
+    EMAIL_FROM: ${env:EMAIL_FROM}
+    EMAIL_TO: ${env:EMAIL_TO}
+    MAX_PRICE: ${env:MAX_PRICE}
+    MAX_DAYS: ${env:MAX_DAYS}
+    MIN_DAYS: ${env:MIN_DAYS}
+    INITIAL_DATE: ${env:INITIAL_DATE}
+    ORIGIN: ${env:ORIGIN}
+    DESTINATION: ${env:DESTINATION}
 
 functions:
   findTickets:
@@ -17,3 +27,4 @@ functions:
       - schedule: cron(0 6 ? * MON,WED,SAT *)
 plugins:
   - serverless-esbuild
+  - serverless-offline

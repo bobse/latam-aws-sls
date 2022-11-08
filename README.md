@@ -30,19 +30,28 @@ ORIGIN = "CGH"
 DESTINATION = "POA"
 ```
 
-### Edit `serveless.yaml` cron schedule to your preference
+### Edit `serveless.yaml`
 
-<i> It's recommended not to exceed one a day.
-Please be reasonable with your api calls.</i>
+#### Cron schedule to your preference
+
+##### <i> It's recommended not to exceed one a day. Please be reasonable with your api calls.</i>
 
 ```
     events:
       - schedule: cron(0 6 ? * MON-FRI *)
 ```
 
-### Serverless install
+---
+
+## Serverless install
 
 https://www.serverless.com/framework/docs/getting-started
+
+Set to your organization:
+
+```
+serverless --org=<your-org>
+```
 
 ### Install dependencies:
 

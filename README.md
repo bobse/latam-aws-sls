@@ -1,5 +1,8 @@
 # Latam Ticket Finder
 
+> **Warning:**
+> Aparently AWS & GCP are blocked from those requests to AkamaiGHost. Right now only works locally.
+
 ## Serverless Lambda
 
 Lambda function using the serverless framework for deploying a cron job to search for tickets on Latam Airlines and email the results.

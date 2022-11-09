@@ -1,8 +1,7 @@
 FROM node:18-alpine
 
-ENV APP_HOME=/app
 ENV NODE_ENV=production
-ENV APP_HOME=/app
+ENV APP_HOME=/app/
 
 # create the appropriate directories
 RUN mkdir $APP_HOME

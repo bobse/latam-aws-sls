@@ -1,5 +1,5 @@
-import axios from "axios";
 import { airportCodes } from "./airports.mjs";
+import { getUrl } from "./customFetch.mjs";
 
 Date.prototype.addDays = function (days) {
   const currDate = this.valueOf();
@@ -124,31 +124,20 @@ class TicketFinder {
   async getData() {
     const urls = this.generateUrls();
     let maxTries = 2;
-    const axiosConfig = {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
-        Host: "bff.latam.com",
-        Accept: "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        Connection: "keep-alive",
-      },
-      timeout: 10000,
-    };
 
     const getResponses = async (urls) => {
       const responses = await Promise.allSettled(
-        urls.map((url) => axios.get(url, axiosConfig))
+        urls.map((url) => getUrl(url))
       );
       const errors = [];
       const data = [];
       responses.forEach((res) => {
         if (res.status !== "fulfilled") {
-          errors.push(res.reason.config.url);
-          console.error(`Error retrieving ${res.reason.config.url}`);
-          console.error(JSON.stringify(res.reason));
+          console.error(res);
+          errors.push(res.reason.url);
+          console.error(`Error retrieving ${res.reason.url}`);
         } else {
-          data.push(res.value.data);
+          data.push(res.value);
         }
       });
       return [data, errors];
@@ -164,14 +153,14 @@ class TicketFinder {
       responseData.concat(response[0]);
     }
     if (errors.length > 0) {
-      throw new "Could not retrieve all the urls!"();
+      throw new Error("Could not retrieve all the urls!");
     }
     return responseData;
   }
 
   generateUrls() {
     const urls = [];
-    const baseUrl = `http://bff.latam.com/ws/proxy/booking-webapp-bff/v1/public/revenue/bestprices/roundtrip?departure={departureDate}&origin=${this.origin}&destination=${this.destination}&cabin=Y&country=BR&language=PT&home=pt_br&return={returnDate}&adult=1&promoCode=`;
+    const baseUrl = `https://bff.latam.com/ws/proxy/booking-webapp-bff/v1/public/revenue/bestprices/roundtrip?departure={departureDate}&origin=${this.origin}&destination=${this.destination}&cabin=Y&country=BR&language=PT&home=pt_br&return={returnDate}&adult=1&promoCode=`;
     for (let idx in this.travelDates) {
       const newUrl = baseUrl
         .replace("{departureDate}", this.travelDates[idx][0])

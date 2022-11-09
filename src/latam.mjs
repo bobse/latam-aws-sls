@@ -123,7 +123,7 @@ class TicketFinder {
 
   async getData() {
     const urls = this.generateUrls();
-    let maxTries = 2;
+    let maxTries = 1;
 
     const getResponses = async (urls) => {
       const responses = await Promise.allSettled(
@@ -145,7 +145,6 @@ class TicketFinder {
 
     let [responseData, errors] = await getResponses(urls);
     while (errors.length > 0 && maxTries > 0) {
-      await this._sleep(1000);
       console.log(`${maxTries} attempts left >> Trying again to get urls...`);
       const response = await getResponses(errors);
       maxTries -= 1;
@@ -169,13 +168,10 @@ class TicketFinder {
     }
     return urls;
   }
-
-  _sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 }
 
 export { TicketFinder };
 
 // const a = new TicketFinder("vix", "poa", "2023-01-01", 1380, 4, 5);
 // const bestPrices = await a.getBestPrices();
+// console.log(bestPrices);

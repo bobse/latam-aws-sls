@@ -1,6 +1,7 @@
 "use strict";
 import { TicketFinder } from "./latam.mjs";
 import { Email } from "./emailHelper.mjs";
+import { getUrl } from "./customFetch.mjs";
 
 export const run = async () => {
   const {
@@ -51,4 +52,11 @@ export const run = async () => {
   } else {
     console.log("No prices have matched your criteria!");
   }
+};
+
+export const test = async () => {
+  const response = await getUrl(
+    "https://bff.latam.com/ws/proxy/booking-webapp-bff/v1/public/revenue/bestprices/roundtrip?departure=2022-12-29&origin=CGH&destination=POA&cabin=Y&country=BR&language=PT&home=pt_br&return=2022-12-31&adult=1&promoCode="
+  );
+  console.log(response);
 };

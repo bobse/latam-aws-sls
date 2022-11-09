@@ -27,6 +27,13 @@ functions:
       - schedule: cron(0 6 ? * MON,WED,SAT *)
     timeout: 300
 
+  test:
+    handler: src/handler.test
+    events:
+      - http:
+          path: /
+          method: get
+
 plugins:
   - serverless-esbuild
   - serverless-offline

@@ -1,7 +1,7 @@
 # Latam Ticket Finder
 
 > **Warning:**
-> Aparently AWS & GCP are blocked from those requests to AkamaiGHost. Right now only works locally.
+> Aparently AWS(Lambda/Serverless) & GCP(CloudRun) are blocked from making requests to AkamaiGHost. Right now only works locally or on compute engine.
 
 ## Serverless Lambda
 
